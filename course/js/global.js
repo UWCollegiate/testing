@@ -1,5 +1,5 @@
 async function loadVer() {
-    let res = await fetch("data/version.txt");
+    let res = await fetch(window.assetUrl("data/version.txt"), { cache: "no-store" });
     return await res.text();
 }
 

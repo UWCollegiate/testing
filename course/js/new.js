@@ -29,7 +29,7 @@ function addCourse(name, slots) {
 }
 
 async function loadCSV(path) {
-    let response = await fetch(path);
+    let response = await fetch(window.assetUrl(path), { cache: "no-store" });
     if (response.ok) {
         let text = await response.text();
         // ignore first row
