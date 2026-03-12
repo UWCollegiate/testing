@@ -1,20 +1,3 @@
-document.querySelectorAll(".gradeHeader").forEach((gradeHeader) => {
-    gradeHeader.addEventListener("click", () => {
-        let grade = gradeHeader.parentElement;
-        let gradeContent = gradeHeader.nextElementSibling;
-
-        if (grade.classList.contains("active")) {
-            gradeContent.style.height = "0";
-            grade.classList.remove("active");
-        }
-        else {
-            // hacky expanding
-            gradeContent.style.height = gradeContent.scrollHeight + "px";
-            grade.classList.add("active");
-        }
-    });
-});
-
 function addCourse(name, slots) {
     let courses = JSON.parse(localStorage.courses);
     courses[name] = {
@@ -60,15 +43,37 @@ function createElements(containerName, data) {
     }
 }
 
-for (let i of ["grade9", "grade10", "grade11", "grade12", "dualcredit"]) {
-    loadCSV(`data/${localStorage.version}/${i}.csv`).then(r => createElements(i, r));
-}
-for (let i of ["core9", "core10"]) {
-    loadCSV(`data/${i}.csv`).then(r =>
+async function initPage() {
+    await window.appReady;
+
+    document.querySelectorAll(".gradeHeader").forEach((gradeHeader) => {
+        gradeHeader.addEventListener("click", () => {
+            let grade = gradeHeader.parentElement;
+            let gradeContent = gradeHeader.nextElementSibling;
+
+            if (grade.classList.contains("active")) {
+                gradeContent.style.height = "0";
+                grade.classList.remove("active");
+            }
+            else {
+                // hacky expanding
+                gradeContent.style.height = gradeContent.scrollHeight + "px";
+                grade.classList.add("active");
+            }
+        });
+    });
+
+    for (let i of ["grade9", "grade10", "grade11", "grade12", "dualcredit"]) {
+        let data = await loadCSV(`data/${localStorage.version}/${i}.csv`);
+        createElements(i, data);
+    }
+
+    for (let i of ["core9", "core10"]) {
+        let data = await loadCSV(`data/${i}.csv`);
         document.getElementById(i).addEventListener("click", () => {
             let courses = JSON.parse(localStorage.courses);
 
-            for (let [name, slots] of Object.entries(r)) {
+            for (let [name, slots] of Object.entries(data)) {
                 courses[name] = {
                     slots: slots,
                     restrictions: Array(9).fill(true)
@@ -80,6 +85,8 @@ for (let i of ["core9", "core10"]) {
 
             localStorage.courses = JSON.stringify(courses);
             location.href = "index.html";
-        })
-    );
+        });
+    }
 }
+
+initPage();

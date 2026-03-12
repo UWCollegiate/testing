@@ -46,7 +46,7 @@ async function run() {
     return solutions.map(s => s.sort((a, b) => times[a] - times[b]).map(i => names[i]));
 }
 
-run().then(solutions => {
+window.appReady.then(() => run()).then(solutions => {
     let selectionContainer = document.getElementById("selectionContainer");
 
     if (solutions.length === 0) {

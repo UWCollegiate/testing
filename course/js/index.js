@@ -28,4 +28,7 @@ function createElements() {
     }
 }
 
-createElements();
+window.appReady.then(() => {
+    localStorage.replacing = JSON.stringify(null);
+    createElements();
+});
