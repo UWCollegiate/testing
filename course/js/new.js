@@ -53,6 +53,11 @@ function createElements(containerName, data) {
             <button class="gradeButton" onclick="addCourse('${key}', [${value}])">${key}</button>
         `)
     }
+
+    // Keep expanded sections open even when their course buttons load after the click.
+    if (gradeContent.parentElement.classList.contains("active")) {
+        gradeContent.style.height = gradeContent.scrollHeight + "px";
+    }
 }
 
 for (let i of ["grade9", "grade10", "grade11", "grade12", "dualcredit"]) {
