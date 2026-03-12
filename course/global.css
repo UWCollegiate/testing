@@ -190,6 +190,14 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #a1a1a1;
 }
 
+.gradeButton.selected {
+    background-color: #a3e478;
+}
+
+.gradeButton.selected:hover {
+    background-color: #8fcb68;
+}
+
 #core9, #core10 {
     color: #ffffff;
     position: absolute;

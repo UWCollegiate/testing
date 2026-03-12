@@ -1,14 +1,31 @@
-function addCourse(name, slots) {
+function updateCourseButton(button, name) {
     let courses = JSON.parse(localStorage.courses);
-    courses[name] = {
-        slots: slots,
-        restrictions: Array(9).fill(true)
-    };
+    let isSelected = Object.prototype.hasOwnProperty.call(courses, name);
+    button.classList.toggle("selected", isSelected);
+}
+
+function toggleCourse(name, slots, button) {
+    let courses = JSON.parse(localStorage.courses);
     let replacing = JSON.parse(localStorage.replacing);
-    if (replacing) delete courses[replacing];
+
+    if (Object.prototype.hasOwnProperty.call(courses, name)) {
+        delete courses[name];
+    }
+    else {
+        courses[name] = {
+            slots: slots,
+            restrictions: Array(9).fill(true)
+        };
+
+        if (replacing && replacing !== name) {
+            delete courses[replacing];
+            localStorage.replacing = JSON.stringify(null);
+        }
+    }
 
     localStorage.courses = JSON.stringify(courses);
-    location.href = "index.html";
+
+    if (button) updateCourseButton(button, name);
 }
 
 async function loadCSV(path) {
@@ -32,9 +49,13 @@ function createElements(containerName, data) {
     let gradeContent = document.getElementById(containerName);
 
     for (let [key, value] of Object.entries(data)) {
-        gradeContent.insertAdjacentHTML("beforeend", `
-            <button class="gradeButton" onclick="addCourse('${key}', [${value}])">${key}</button>
-        `)
+        let button = document.createElement("button");
+        button.classList.add("gradeButton");
+        button.type = "button";
+        button.textContent = key;
+        updateCourseButton(button, key);
+        button.addEventListener("click", () => toggleCourse(key, value, button));
+        gradeContent.appendChild(button);
     }
 
     // Keep expanded sections open even when their course buttons load after the click.
@@ -84,7 +105,7 @@ async function initPage() {
             if (replacing) delete courses[replacing];
 
             localStorage.courses = JSON.stringify(courses);
-            location.href = "index.html";
+            document.querySelectorAll(".gradeButton").forEach((button) => updateCourseButton(button, button.textContent));
         });
     }
 }
