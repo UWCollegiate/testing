@@ -1,8 +1,8 @@
 NAME,1,2,3,4,5,6,7,8,9
-Art 10S,Y,Y,N,N,N,N,Y,N,N
-Band - Instrumental 10S,N,N,Y,N,N,N,N,N,N
+Art 10S,Y,N,N,N,Y,N,Y,N,N
+Band - Instrumental 10S,N,N,N,N,Y,N,N,N,Y
 Choral 10S,N,N,N,N,N,N,N,Y,N
-English 10F,Y,N,N,Y,Y,N,N,N,N
+English 10F,N,Y,N,N,Y,N,Y,N,N
 Francais 10F,N,N,N,N,Y,N,N,N,N
 French 10F,N,N,N,N,N,Y,N,Y,N
 Jazz Ensemble 10S,N,N,N,Y,N,N,N,N,N
