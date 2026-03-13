@@ -102,6 +102,17 @@ window.appReady.then(() => run()).then(solutions => {
         let pdf = await PDFLib.PDFDocument.load(defaultPDF);
         let page = pdf.getPages()[0];
         let font = await pdf.embedFont(PDFLib.StandardFonts.TimesRoman);
+        let { width, height } = page.getSize();
+
+        page.drawText("DRAFT", {
+            x: width * 0.12,
+            y: height * 0.2,
+            size: 120,
+            rotate: PDFLib.degrees(38),
+            opacity: 0.18,
+            font: font,
+            color: PDFLib.rgb(0.75, 0.1, 0.1)
+        });
 
         solutions[currentSelected].forEach((course, slot) => {
             for (let coord of slotPlacements[slot]) {
