@@ -105,9 +105,9 @@ window.appReady.then(() => run()).then(solutions => {
         let { width, height } = page.getSize();
 
         page.drawText("DRAFT", {
-            x: width * 0.12,
-            y: height * 0.2,
-            size: 120,
+            x: width * 0.22,
+            y: height * 0.34,
+            size: 240,
             rotate: PDFLib.degrees(38),
             opacity: 0.18,
             font: font,
